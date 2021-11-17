@@ -1,0 +1,5 @@
+rootProject.name = 'kafka-stream-expample'
+include 'processor'
+include 'producer'
+include 'consumer'
+

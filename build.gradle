@@ -1,0 +1,47 @@
+// 插件
+plugins {
+    id 'java'
+    id 'java-library'
+    // 有这个声明，子模块可以使用org.springframework.boot插件而无需指定版本，但是apply=false表示当前模块不使用此插件
+    id 'org.springframework.boot' version '2.5.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+//  allprojects  所有项目共享的配置
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java-library'
+    // 有这个声明，子模块可以使用org.springframework.boot插件而无需指定版本，但是apply=false表示当前模块不使用此插件
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    group = 'com.example'
+    version = '1.0'
+    sourceCompatibility = 11
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
+
+// subprojects : 所有子模块共享的配置
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    // java编译的时候缺省状态下会因为中文字符而失败
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+    // 配置所有子模块的依赖仓库地址
+    repositories {
+        // 本地maven仓库
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+}
